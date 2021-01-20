@@ -13,14 +13,25 @@ public class Controller {
     @FXML Text materialCostTotal;
     @FXML ComboBox<Integer> filamentWeight;
 
+    @FXML TextField printingTime;
+    @FXML ComboBox<String> printerSelect;
+    @FXML Text printerOperationTotalText;
+
     @FXML
     public void initialize() {
-        //Initialize the ComboBox with set integers of weights
+        //Initialize the ComboBox for filament weights with set integers of weights
         filamentWeight.getItems().removeAll(filamentWeight.getItems());
         filamentWeight.getItems().addAll(250,500,1000,3000); //Input range of common filament weights
         filamentWeight.getSelectionModel().select(2); //Defaults 1000 grams
+
+        //Initialize the ComboBox for printer Selection with the required printers will be updated
+        //Down the line to add more printers for now only 1 hard coded printer
+        printerSelect.getItems().removeAll(printerSelect.getItems());
+        printerSelect.getItems().addAll("Ender 3");
+        printerSelect.getSelectionModel().select(0); //Default to main printer
     }
 
+    //Calculate the price per gram of filament
     @FXML
     public double CalculatePricePerGram() {
         double pricePerGram = 0;
@@ -39,6 +50,7 @@ public class Controller {
         return pricePerGram;
     }
 
+    //Calculate the overall cost for this part
     @FXML
     public double CalculcateMaterialCost() {
         int weight = 0;
@@ -52,6 +64,39 @@ public class Controller {
             materialCostTotal.setText("€" + Double.toString(totalMaterialCost));
         }
         return totalMaterialCost;
+    }
+
+    //Calculate the cost to pay off the printer
+    @FXML
+    public double PrinterCost() {
+        double printOperationCost = 0;
+
+        double printerFee = 0; //The amount per hour to recoup costs of printer in a given time frame
+
+        if(printerSelect.getValue().equals("Ender 3")) {
+            printerFee = 0.12; //Price per hour to pay back printer in 3 months
+        }
+
+        if(printingTime != null && !printingTime.getText().isEmpty()) {
+            double printingHours = ConvertTimeToDecimal(Double.parseDouble(printingTime.getText()));
+
+            printOperationCost = printerFee * printingHours;
+
+            printerOperationTotalText.setText("€" + Double.toString(printOperationCost));
+        }
+
+        return printOperationCost;
+    }
+
+    public double ConvertTimeToDecimal(double time) {
+        int hours = (int)time;
+        double minutes = (((time - hours) * 100) / 60);
+
+        time = hours + minutes;
+
+        System.out.println(time);
+
+        return time;
     }
 
 }
