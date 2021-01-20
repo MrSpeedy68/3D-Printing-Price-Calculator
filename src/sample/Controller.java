@@ -17,6 +17,9 @@ public class Controller {
     @FXML ComboBox<String> printerSelect;
     @FXML Text printerOperationTotalText;
 
+    @FXML TextField manHours;
+    @FXML Text manPowerTotalCost;
+
     @FXML
     public void initialize() {
         //Initialize the ComboBox for filament weights with set integers of weights
@@ -44,7 +47,7 @@ public class Controller {
 
             pricePerGram = price/weight; //Get the price per gram of the filament
 
-            pricePerGramText.setText("€" + Double.toString(pricePerGram) ); //Set the text of the price per gram
+            pricePerGramText.setText("€" + pricePerGram); //Set the text of the price per gram
         }
 
         return pricePerGram;
@@ -61,7 +64,7 @@ public class Controller {
 
             totalMaterialCost = CalculatePricePerGram() * weight;
 
-            materialCostTotal.setText("€" + Double.toString(totalMaterialCost));
+            materialCostTotal.setText("€" + totalMaterialCost);
         }
         return totalMaterialCost;
     }
@@ -82,12 +85,28 @@ public class Controller {
 
             printOperationCost = printerFee * printingHours;
 
-            printerOperationTotalText.setText("€" + Double.toString(printOperationCost));
+            printerOperationTotalText.setText("€" + printOperationCost);
         }
 
         return printOperationCost;
     }
 
+    @FXML
+    public double ManHourCosts() {
+        double manHourCost = 0;
+
+        if(manHours != null && !manHours.getText().isEmpty()) {
+            double amountOfHours = ConvertTimeToDecimal(Double.parseDouble(manHours.getText()));
+
+            manHourCost = amountOfHours * 12; //12 is the wage per hour needs to be editable currently hard coded
+
+            manPowerTotalCost.setText("€" + manHourCost);
+        }
+        return manHourCost;
+    }
+
+
+    //Convert decimal time to decimal. 1 hour 30 mins = 1.30 in app which converts to 1.5 hours
     public double ConvertTimeToDecimal(double time) {
         int hours = (int)time;
         double minutes = (((time - hours) * 100) / 60);
@@ -98,5 +117,9 @@ public class Controller {
 
         return time;
     }
+
+
+
+
 
 }

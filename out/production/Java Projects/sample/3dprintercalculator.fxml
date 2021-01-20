@@ -46,7 +46,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fill="RED" layoutX="14.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Material" underline="true" wrappingWidth="262.65234375">
+      <Text fill="RED" layoutX="14.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Material Cost" underline="true" wrappingWidth="262.65234375">
          <font>
             <Font size="24.0" />
          </font>
@@ -74,6 +74,27 @@
          </font>
       </Text>
       <Text layoutX="14.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Printer Operation Cost" wrappingWidth="262.65234375">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="14.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manpower Cost" underline="true" wrappingWidth="262.65234375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="593.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time to setup print" wrappingWidth="262.65234375">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="manHours" layoutX="219.0" layoutY="574.0" onKeyTyped="#ManHourCosts" prefHeight="25.0" prefWidth="263.0" />
+      <Text fx:id="manPowerTotalCost" layoutX="219.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="262.65234375">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="650.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manpower Cost:" wrappingWidth="262.65234375">
          <font>
             <Font size="18.0" />
          </font>
