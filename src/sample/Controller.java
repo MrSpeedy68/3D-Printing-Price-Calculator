@@ -41,7 +41,17 @@ public class Controller {
 
     @FXML
     public double CalculcateMaterialCost() {
-        
+        int weight = 0;
+        double totalMaterialCost = 0;
+
+        if(modelWeight!= null && !modelWeight.getText().isEmpty()) {
+            weight = Integer.parseInt(modelWeight.getText());
+
+            totalMaterialCost = CalculatePricePerGram() * weight;
+
+            materialCostTotal.setText("€" + Double.toString(totalMaterialCost));
+        }
+        return totalMaterialCost;
     }
 
 }
