@@ -20,6 +20,8 @@ public class Controller {
     @FXML TextField manHours;
     @FXML Text manPowerTotalCost;
 
+    @FXML Text electricityTotalCost;
+
     @FXML
     public void initialize() {
         //Initialize the ComboBox for filament weights with set integers of weights
@@ -86,6 +88,8 @@ public class Controller {
             printOperationCost = printerFee * printingHours;
 
             printerOperationTotalText.setText("€" + printOperationCost);
+
+            ElectricityCost();
         }
 
         return printOperationCost;
@@ -101,8 +105,25 @@ public class Controller {
             manHourCost = amountOfHours * 12; //12 is the wage per hour needs to be editable currently hard coded
 
             manPowerTotalCost.setText("€" + manHourCost);
+
         }
         return manHourCost;
+    }
+
+    public double kWhPrice = 0.1753; //Price per kW
+    public double printerKWhUsage = 0.15; //How much kWh printer uses per hour
+
+    //Calculate the electricty costs
+    @FXML
+    public double ElectricityCost() {
+        double totalElectricCost = 0;
+        double electricCostPerHour = kWhPrice * printerKWhUsage;
+
+        totalElectricCost = electricCostPerHour * ConvertTimeToDecimal(Double.parseDouble(printingTime.getText()));
+
+        electricityTotalCost.setText("€" + totalElectricCost);
+
+        return totalElectricCost;
     }
 
 
