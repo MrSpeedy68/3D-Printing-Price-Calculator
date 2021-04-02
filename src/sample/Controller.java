@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -79,7 +80,7 @@ public class Controller {
         double printerFee = 0; //The amount per hour to recoup costs of printer in a given time frame
 
         if(printerSelect.getValue().equals("Ender 3")) {
-            printerFee = 0.12; //Price per hour to pay back printer in 3 months
+            printerFee = 0.12; //Price per hour to pay back printer in 3 months HARD CODED 0.12 for ender 0.185 for mars 2 pro
         }
 
         if(printingTime != null && !printingTime.getText().isEmpty()) {
@@ -137,6 +138,19 @@ public class Controller {
         System.out.println(time);
 
         return time;
+    }
+
+    @FXML Text totalText;
+    @FXML Button totalButton;
+
+    public void TotalCostButton() {
+        CalculateTotalCost(CalculcateMaterialCost(),PrinterCost(),ManHourCosts(),ElectricityCost());
+    }
+
+    //Calculate total price for the print
+    public void CalculateTotalCost(double materialCost, double printerCost, double manHourCost, double electricityCost) {
+        double totalCost = materialCost + printerCost + manHourCost + electricityCost;
+        totalText.setText("" + totalCost);
     }
 
 
