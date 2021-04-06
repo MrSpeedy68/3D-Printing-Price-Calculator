@@ -5,6 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.awt.event.ActionEvent;
 
 public class Controller {
 
@@ -59,15 +65,17 @@ public class Controller {
     //Calculate the overall cost for this part
     @FXML
     public double CalculcateMaterialCost() {
-        int weight = 0;
+        double weight = 0;
         double totalMaterialCost = 0;
 
         if(modelWeight!= null && !modelWeight.getText().isEmpty()) {
-            weight = Integer.parseInt(modelWeight.getText());
+            weight = Double.parseDouble(modelWeight.getText());
 
             totalMaterialCost = CalculatePricePerGram() * weight;
 
             materialCostTotal.setText("€" + totalMaterialCost);
+
+            CalculateTotalCost(totalMaterialCost);
         }
         return totalMaterialCost;
     }
@@ -147,10 +155,29 @@ public class Controller {
         CalculateTotalCost(CalculcateMaterialCost(),PrinterCost(),ManHourCosts(),ElectricityCost());
     }
 
+    public void CalculateTotalCost(double materialCost) {
+        double totalCost = 0.0;
+        totalCost = materialCost;
+        totalText.setText("" + totalCost);
+    }
+
+
     //Calculate total price for the print
     public void CalculateTotalCost(double materialCost, double printerCost, double manHourCost, double electricityCost) {
-        double totalCost = materialCost + printerCost + manHourCost + electricityCost;
+        double totalCost = 0.0;
+        totalCost = materialCost + printerCost + manHourCost + electricityCost;
         totalText.setText("" + totalCost);
+    }
+
+    public void OpenNewFilamentWindow(ActionEvent event) {
+        Parent root;
+//        try {
+//            mainWindow=primaryStage;
+//            Parent root = FXMLLoader.load(getClass().getResource("3dprintercalculator.fxml"));
+//            primaryStage.setTitle("3D Printer Price Calculator");
+//            primaryStage.setScene(new Scene(root));
+//            primaryStage.show();
+//        }
     }
 
 

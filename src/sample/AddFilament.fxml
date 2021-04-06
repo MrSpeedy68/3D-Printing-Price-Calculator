@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddFilamentController">
+   <children>
+      <Text layoutX="219.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3D Print Price Calculator" wrappingWidth="262.65234375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="14.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add A New Filament" underline="true" wrappingWidth="262.65234375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="39.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filament Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="39.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Material Type">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="39.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Roll Weight">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="39.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price Per Roll">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="filamentName" layoutX="234.0" layoutY="132.0" prefHeight="25.0" prefWidth="368.0" />
+      <TextField fx:id="materialType" layoutX="234.0" layoutY="201.0" prefHeight="25.0" prefWidth="368.0" />
+      <TextField fx:id="rollWeight" layoutX="234.0" layoutY="285.0" prefHeight="25.0" prefWidth="368.0" />
+      <TextField fx:id="pricePerRoll" layoutX="234.0" layoutY="380.0" prefHeight="25.0" prefWidth="368.0" />
+      <Button fx:id="addNewFilament" layoutX="248.0" layoutY="524.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="178.0" text="Add Filament" />
+      <Button fx:id="addFilamentBackButton" layoutX="60.0" layoutY="708.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="120.0" text="Back" />
+      <Text fx:id="newFilamentText" layoutX="326.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>
