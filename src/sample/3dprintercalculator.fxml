@@ -126,7 +126,8 @@
          </font>
       </Text>
       <Button fx:id="totalButton" layoutX="267.0" layoutY="918.0" mnemonicParsing="false" onAction="#TotalCostButton" prefHeight="60.0" prefWidth="167.0" text="Calculate Total" />
-      <Button fx:id="addFilament" layoutX="45.0" layoutY="164.0" mnemonicParsing="false" text="Add Filament" />
-      <ComboBox fx:id="selectFilament" layoutX="275.0" layoutY="164.0" onAction="#CalculatePricePerGram" prefWidth="150.0" promptText="Select Filament" />
+      <Button fx:id="addFilament" layoutX="45.0" layoutY="164.0" mnemonicParsing="false" onAction="#OpenNewFilamentWindow" text="Add Filament" />
+      <ComboBox fx:id="selectFilament" layoutX="275.0" layoutY="164.0" onAction="#HandleMaterialCalculations" prefWidth="150.0" promptText="Select Filament" />
+      <Button fx:id="updateFilament" layoutX="555.0" layoutY="33.0" mnemonicParsing="false" onAction="#UpdateFilamentComboBox" text="Add Filament" />
    </children>
 </Pane>

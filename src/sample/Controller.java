@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class Controller {
 
@@ -28,6 +31,10 @@ public class Controller {
     @FXML Text manPowerTotalCost;
 
     @FXML Text electricityTotalCost;
+
+
+    private FilamentList filamentList = new FilamentList();
+    public AddFilamentController addFilamentController = new AddFilamentController();
 
     @FXML
     public void initialize() {
@@ -78,6 +85,19 @@ public class Controller {
             CalculateTotalCost(totalMaterialCost);
         }
         return totalMaterialCost;
+    }
+
+    private double weight = 0;
+    private double price = 0;
+    private boolean isMaterial = false;
+
+    @FXML
+    public void HandleMaterialCalculations() {
+        System.out.println(selectFilament.getItems());
+
+
+
+
     }
 
     //Calculate the cost to pay off the printer
@@ -169,15 +189,33 @@ public class Controller {
         totalText.setText("" + totalCost);
     }
 
-    public void OpenNewFilamentWindow(ActionEvent event) {
+    @FXML
+    public void OpenNewFilamentWindow() {
         Parent root;
-//        try {
-//            mainWindow=primaryStage;
-//            Parent root = FXMLLoader.load(getClass().getResource("3dprintercalculator.fxml"));
-//            primaryStage.setTitle("3D Printer Price Calculator");
-//            primaryStage.setScene(new Scene(root));
-//            primaryStage.show();
-//        }
+        try {
+            //mainWindow=primaryStage;
+            root = FXMLLoader.load(getClass().getResource("AddFilament.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("3D Printer Price Calculator");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    ComboBox <String> selectFilament;
+
+    @FXML
+    Button updateFilament;
+
+    @FXML
+    public void UpdateFilamentComboBox() {
+        System.out.println(filamentList.getFilament(0).toString());
+        selectFilament.setItems(filamentList.getFilamentObservableList());
     }
 
 

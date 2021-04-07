@@ -73,4 +73,10 @@ public class Filament {
             this.Price = price;
         }
     }
+
+    public String toString() {
+        return Name + ", Material Type: " + MaterialType + ", Roll Weight " + Weight + ", Roll Price " + Price;
+    }
+
+
 }

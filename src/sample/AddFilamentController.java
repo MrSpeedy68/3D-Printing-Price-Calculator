@@ -28,13 +28,26 @@ public class AddFilamentController {
 
     }
 
+
+    @FXML
     public void AddNewFilament() {
         if(filamentName != null && materialType != null && rollWeight != null && pricePerRoll != null) { //Check if the textfileds arent null before adding a new filament
-            filamentList.addFilament(new Filament(filamentName.getText(),materialType.getText(),Integer.parseInt(rollWeight.getText()),Double.parseDouble(pricePerRoll.getText())));
+            filamentList.addFilament(new Filament(filamentName.getText(),materialType.getText(),Integer.parseInt(rollWeight.getText()),Double.parseDouble(pricePerRoll.getText()))); //Adds a new filament to the array.
+
+            for(int i = 0; i < filamentList.getFilamentArraySize(); i++) {
+                System.out.println(filamentList.getFilament(i).toString());
+            }
         }
         else newFilamentText.setText("The Fields Cannot Be Empty!!"); //if it is empty then display an error message
-
     }
+
+    @FXML
+    public void Test() {
+        filamentList.getListOfFilaments();
+    }
+
+
+
 
 
 
