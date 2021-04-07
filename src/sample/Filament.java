@@ -4,8 +4,8 @@ public class Filament {
 
     private String Name;
     private String MaterialType;
-    private int Weight;
-    private Double Price;
+    private double Weight;
+    private double Price;
 
     public Filament(String name, String materialType, int weight, Double price) {
         if(materialType.length() <= 25) {
@@ -13,17 +13,17 @@ public class Filament {
         }
         else this.MaterialType = materialType.substring(0,25);
 
-        if(weight > 0 && weight <= 10000) {
+        if(weight > 0.0 && weight <= 10000.0) {
             this.Weight = weight;
         }
-        else this.Weight = 0;
+        else this.Weight = 0.0;
 
         if(name.length() <= 30) {
             this.Name = name;
         }
         else this.Name = name.substring(0,30);
 
-        if(price > 0 && price <= 10000) {
+        if(price > 0.0 && price <= 10000.0) {
             this.Price = price;
         }
         else this.Price = 0.0;
@@ -38,11 +38,11 @@ public class Filament {
         return MaterialType;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return Weight;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return Price;
     }
 
@@ -57,7 +57,7 @@ public class Filament {
     }
 
     public void setWeight(int weight) {
-        if(weight > 0 && weight <= 10000) {
+        if(weight > 0.0 && weight <= 10000.0) {
             this.Weight = weight;
         }
     }
@@ -69,7 +69,7 @@ public class Filament {
     }
 
     public void setPrice(Double price) {
-        if(price > 0 && price <= 10000) {
+        if(price > 0.0 && price <= 10000.0) {
             this.Price = price;
         }
     }

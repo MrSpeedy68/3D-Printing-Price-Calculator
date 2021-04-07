@@ -43,10 +43,10 @@ public class FilamentList {
         else return Boolean.parseBoolean(null);
     }
 
-    public ObservableList <String> getFilamentObservableList() {
-        ObservableList <String> filamentOL = FXCollections.observableArrayList();
+    public ObservableList <Filament> getFilamentObservableList() {
+        ObservableList <Filament> filamentOL = FXCollections.observableArrayList();
         for(int i = 0; i < filaments.size(); i++) {
-            filamentOL.add(getFilament(i).getName() + " - " + getFilament(i).getMaterialType());
+            filamentOL.add(getFilament(i));
         }
         return filamentOL;
     }

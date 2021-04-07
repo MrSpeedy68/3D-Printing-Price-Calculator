@@ -52,19 +52,27 @@ public class Controller {
 
     //Calculate the price per gram of filament
     @FXML
-    public double CalculatePricePerGram() {
+    public double CalculatePricePerGram(double weight, double price) {
         double pricePerGram = 0;
-        double price = 0;
 
-        int weight = filamentWeight.getValue(); //Get the value of the weight int
-
-        if (filamentPrice != null && !filamentPrice.getText().isEmpty()) {
-            price = Double.parseDouble(filamentPrice.getText()); //Get Price from text to double
-
-            pricePerGram = price/weight; //Get the price per gram of the filament
-
+        if(isMaterial) {
+            pricePerGram = price/weight;
             pricePerGramText.setText("€" + pricePerGram); //Set the text of the price per gram
         }
+
+
+
+        //double price = 0;
+
+        //int weight = filamentWeight.getValue(); //Get the value of the weight int
+
+//        if (filamentPrice != null && !filamentPrice.getText().isEmpty()) {
+//            price = Double.parseDouble(filamentPrice.getText()); //Get Price from text to double
+//
+//            pricePerGram = price/weight; //Get the price per gram of the filament
+//
+//            pricePerGramText.setText("€" + pricePerGram); //Set the text of the price per gram
+//        }
 
         return pricePerGram;
     }
@@ -78,7 +86,7 @@ public class Controller {
         if(modelWeight!= null && !modelWeight.getText().isEmpty()) {
             weight = Double.parseDouble(modelWeight.getText());
 
-            totalMaterialCost = CalculatePricePerGram() * weight;
+            totalMaterialCost = CalculatePricePerGram(fWeight,fPrice) * weight;
 
             materialCostTotal.setText("€" + totalMaterialCost);
 
@@ -87,17 +95,19 @@ public class Controller {
         return totalMaterialCost;
     }
 
-    private double weight = 0;
-    private double price = 0;
+    private double fWeight = 0;
+    private double fPrice = 0;
     private boolean isMaterial = false;
 
     @FXML
-    public void HandleMaterialCalculations() {
-        System.out.println(selectFilament.getItems());
+    public void HandleMaterialCalculations() { // get current selected filament from combo box and set weight and price values
+        System.out.println(selectFilament.getValue());
 
+        fWeight = selectFilament.getValue().getWeight();
+        fPrice = selectFilament.getValue().getPrice();
+        isMaterial = true;
 
-
-
+        CalculatePricePerGram(fWeight,fPrice);
     }
 
     //Calculate the cost to pay off the printer
@@ -207,7 +217,7 @@ public class Controller {
 
 
     @FXML
-    ComboBox <String> selectFilament;
+    ComboBox <Filament> selectFilament;
 
     @FXML
     Button updateFilament;
