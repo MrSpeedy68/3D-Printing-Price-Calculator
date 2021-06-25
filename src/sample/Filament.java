@@ -1,6 +1,8 @@
 package sample;
 
-public class Filament {
+import  java.io.Serializable;
+
+public class Filament implements Serializable {
 
     private String Name;
     private String MaterialType;
@@ -74,6 +76,7 @@ public class Filament {
         }
     }
 
+    @Override
     public String toString() {
         return Name + ", Material Type: " + MaterialType + ", Roll Weight " + Weight + ", Roll Price " + Price;
     }

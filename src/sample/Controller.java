@@ -1,18 +1,14 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
+import java.io.File;  // Import the File class
 import java.io.IOException;
 
 public class Controller {
@@ -50,43 +46,64 @@ public class Controller {
         printerSelect.getSelectionModel().select(0); //Default to main printer
     }
 
+
+    @FXML Slider materialPercentageMarkupSlider;
+    @FXML Text materialPercentageMarkupText;
+    @FXML CheckBox useFilamentDatabase;
+
+    //Handle the percentage filament markup by getting the value and adding 1.
+    @FXML
+    public double HandleFilamentPercentageMarkUp() {
+        double filamentPercentageMarkUp = 1.0;
+
+        System.out.println(Math.ceil(materialPercentageMarkupSlider.getValue()));
+
+        filamentPercentageMarkUp = 1 + ((Math.ceil(materialPercentageMarkupSlider.getValue()))/100);
+        materialPercentageMarkupText.setText("" + Math.ceil(materialPercentageMarkupSlider.getValue()) + "%");
+
+        return filamentPercentageMarkUp;
+    }
+
     //Calculate the price per gram of filament
     @FXML
     public double CalculatePricePerGram(double weight, double price) {
         double pricePerGram = 0;
 
-        if(isMaterial) {
-            pricePerGram = price/weight;
+        if(useFilamentDatabase.isSelected() && weight != 0 && price != 0) {
+            pricePerGram = (price/weight) * HandleFilamentPercentageMarkUp();
             pricePerGramText.setText("€" + pricePerGram); //Set the text of the price per gram
         }
+        return pricePerGram;
+    }
 
+    //Calculate the price per gram of filament
+    @FXML
+    public double CalculatePricePerGram() {
+        double pricePerGram = 0;
 
+        if (filamentPrice != null && !filamentPrice.getText().isEmpty() && filamentWeight != null) {
+            pricePerGram = (Double.parseDouble(filamentPrice.getText())/filamentWeight.getValue()) * HandleFilamentPercentageMarkUp(); //Get the value of the weight int; //Get the price per gram of the filament
 
-        //double price = 0;
-
-        //int weight = filamentWeight.getValue(); //Get the value of the weight int
-
-//        if (filamentPrice != null && !filamentPrice.getText().isEmpty()) {
-//            price = Double.parseDouble(filamentPrice.getText()); //Get Price from text to double
-//
-//            pricePerGram = price/weight; //Get the price per gram of the filament
-//
-//            pricePerGramText.setText("€" + pricePerGram); //Set the text of the price per gram
-//        }
-
+            pricePerGramText.setText("€" + pricePerGram); //Set the text of the price per gram
+        }
         return pricePerGram;
     }
 
     //Calculate the overall cost for this part
     @FXML
     public double CalculcateMaterialCost() {
-        double weight = 0;
         double totalMaterialCost = 0;
 
-        if(modelWeight!= null && !modelWeight.getText().isEmpty()) {
-            weight = Double.parseDouble(modelWeight.getText());
+        if(modelWeight!= null && !modelWeight.getText().isEmpty() && useFilamentDatabase.isSelected()) {
 
-            totalMaterialCost = CalculatePricePerGram(fWeight,fPrice) * weight;
+            totalMaterialCost = HelperClass.round(CalculatePricePerGram(fWeight,fPrice) * Double.parseDouble(modelWeight.getText()),2);
+
+            materialCostTotal.setText("€" + totalMaterialCost);
+
+            CalculateTotalCost(totalMaterialCost);
+        }
+        else if(modelWeight!= null && !modelWeight.getText().isEmpty()) {
+            totalMaterialCost = HelperClass.round(CalculatePricePerGram() * Double.parseDouble(modelWeight.getText()),2);
 
             materialCostTotal.setText("€" + totalMaterialCost);
 
@@ -97,17 +114,17 @@ public class Controller {
 
     private double fWeight = 0;
     private double fPrice = 0;
-    private boolean isMaterial = false;
 
     @FXML
-    public void HandleMaterialCalculations() { // get current selected filament from combo box and set weight and price values
-        System.out.println(selectFilament.getValue());
+    public void HandleMaterialCalculationsComboBox() { // get current selected filament from combo box and set weight and price values
 
-        fWeight = selectFilament.getValue().getWeight();
-        fPrice = selectFilament.getValue().getPrice();
-        isMaterial = true;
+        if(useFilamentDatabase.isSelected()) {
+            System.out.println(selectFilament.getValue());
+            fWeight = selectFilament.getValue().getWeight();
+            fPrice = selectFilament.getValue().getPrice();
 
-        CalculatePricePerGram(fWeight,fPrice);
+            CalculatePricePerGram(fWeight,fPrice);
+        }
     }
 
     //Calculate the cost to pay off the printer
@@ -124,7 +141,7 @@ public class Controller {
         if(printingTime != null && !printingTime.getText().isEmpty()) {
             double printingHours = ConvertTimeToDecimal(Double.parseDouble(printingTime.getText()));
 
-            printOperationCost = printerFee * printingHours;
+            printOperationCost = HelperClass.round(printerFee * printingHours, 2);
 
             printerOperationTotalText.setText("€" + printOperationCost);
 
@@ -150,7 +167,7 @@ public class Controller {
     }
 
     public double kWhPrice = 0.1753; //Price per kW
-    public double printerKWhUsage = 0.15; //How much kWh printer uses per hour
+    public double printerKWhUsage = 0.16; //How much kWh printer uses per hour
 
     //Calculate the electricty costs
     @FXML
@@ -158,7 +175,7 @@ public class Controller {
         double totalElectricCost = 0;
         double electricCostPerHour = kWhPrice * printerKWhUsage;
 
-        totalElectricCost = electricCostPerHour * ConvertTimeToDecimal(Double.parseDouble(printingTime.getText()));
+        totalElectricCost = HelperClass.round(electricCostPerHour * ConvertTimeToDecimal(Double.parseDouble(printingTime.getText())),2);
 
         electricityTotalCost.setText("€" + totalElectricCost);
 
@@ -195,7 +212,7 @@ public class Controller {
     //Calculate total price for the print
     public void CalculateTotalCost(double materialCost, double printerCost, double manHourCost, double electricityCost) {
         double totalCost = 0.0;
-        totalCost = materialCost + printerCost + manHourCost + electricityCost;
+        totalCost = HelperClass.round((materialCost + printerCost + manHourCost + electricityCost),2);
         totalText.setText("" + totalCost);
     }
 
@@ -224,9 +241,12 @@ public class Controller {
 
     @FXML
     public void UpdateFilamentComboBox() {
-        System.out.println(filamentList.getFilament(0).toString());
-        selectFilament.setItems(filamentList.getFilamentObservableList());
+//        System.out.println(filamentList.getFilament(0).toString());
+//        selectFilament.setItems(filamentList.getFilamentObservableList());
+
     }
+
+
 
 
 

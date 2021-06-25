@@ -43,7 +43,7 @@
       <TextField fx:id="rollWeight" layoutX="234.0" layoutY="285.0" prefHeight="25.0" prefWidth="368.0" />
       <TextField fx:id="pricePerRoll" layoutX="234.0" layoutY="380.0" prefHeight="25.0" prefWidth="368.0" />
       <Button fx:id="addNewFilament" layoutX="248.0" layoutY="524.0" mnemonicParsing="false" onAction="#AddNewFilament" prefHeight="61.0" prefWidth="178.0" text="Add Filament" />
-      <Button fx:id="addFilamentBackButton" layoutX="60.0" layoutY="708.0" mnemonicParsing="false" onAction="#Test" prefHeight="61.0" prefWidth="120.0" text="Back" />
+      <Button fx:id="addFilamentBackButton" layoutX="60.0" layoutY="708.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="120.0" text="Back" />
       <Text fx:id="newFilamentText" layoutX="326.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
